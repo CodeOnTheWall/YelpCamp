@@ -1,0 +1,82 @@
+<% layout('layouts/boilerplate') %>
+    <!-- we dont have to use ../layouts because this layout() method
+already looks for folder views as the starting point -->
+    <!-- this include method comes from the ejs-mate package -->
+
+
+    <!-- this will be a put or a patch request (generally used for edits) -->
+    <!-- forms only send a get or post request, so we need method override since we are not using a get or post request -->
+
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-md-6 offset-md-3">
+            <!-- this offset is another way of making it center -->
+            <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form"
+                enctype="multipart/form-data">
+                <!-- have to add enctype to allow pictures to be submitted in the req.body -->
+                <!-- no validate is telling the browser to not do the validations, as we are doing it ourselves with bootstrap -->
+                <!-- the submit will go to /campgrounds -->
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]"
+                        value="<%=campground.title%>" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <!-- campground[title] is an object. This is how we access an objects property (accessing title from campground) properties are found in req.body.campground object, and this saves us a step -->
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="campground[location]"
+                        value="<%=campground.location%>" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group ">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.0" aria-label="price"
+                            aria-describedby="price-label" name="campground[price]" value="<%=campground.price%>"
+                            required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]"
+                        required><%= campground.description %> </textarea>
+                    <!-- on a text area we dont use the value attribute -->
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Add More Image(s)</label>
+                        <input class="form-control" type="file" id="formFileMultiple" name="image" multiple>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <% campground.images.forEach(function(img, i) { %>
+                        <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image-<%= i%>" name="deleteImages[]" value="<%=img.filename%>">
+                            <!-- now each input will have an id of image 0,1 etc-->
+                            <!-- we are going to use the file name to delete the file from cloudinary -->
+                            <!-- any checkbox that was checked gets added to deleteImages -->
+                        </div>
+                        <label for="image-<%= i%>">Delete ?</label>
+                        <% }) %>
+                            <!-- i want an index for each image so ill use forEach. img = image, and i = index -->
+                            <!-- in our data base its img.url since img is an object - it has a path name and a url -->
+                </div>
+                <div class="mb-3"> <button class="btn btn-info">Update Campground</button>
+                </div>
+            </form>
+            <a href=" /campgrounds/<%=campground._id %>">Back to Campground</a>
+        </div>
+    </div>

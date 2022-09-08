@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate') %>
+    <!-- we dont have to use ../layouts because this layout() method
+already looks for folder views as the starting point -->
+    <!-- this include method comes from the ejs-mate package -->
+
+    <div id="cluster-map"></div>
+    <h1>All Campgrounds</h1>
+    <div class="mb-3"><a href="/campgrounds/new">Add Campground</a></div>
+    <% for(let campground of campgrounds){%>
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- this is taking 4 units out of 12, a third of the row -->
+                    <% if (campground.images.length) { %>
+                        <!-- if there is anything in the images array, we will display the first image -->
+                        <img class="img-fluid" alt="" src="<%= campground.images[0].url %>">
+                        <% } else { %>
+                            <img class="img-fluid" alt=""
+                                src="https://res.cloudinary.com/dd5rthmf7/image/upload/v1662493844/YelpCamp/syu4ec0vnb66l8m9dkjp.jpg">
+                            <% } %>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= campground.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= campground.description %>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <%= campground.location %>
+                            </small>
+                        </p>
+                        <a class="btn btn-primary" href="/campgrounds/<%=campground._id%> ">View <%=campground.title %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <% } %>
+            <!-- we are using an anchor tag that goes to the id of that campground, the show.ejs -->
+
+
+
+            <script>
+                const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+                const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+            </script>
+            <!-- this const of campgrounds can now be be passed through clusterMap.js -->
+            <!-- we have to do features since mapbox is expecting an object -->
+            <script src="/javascripts/clusterMap.js"></script>

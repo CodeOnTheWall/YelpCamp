@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+    <!-- we dont have to use ../layouts because this layout() method
+already looks for folder views as the starting point -->
+
+    <div class="row">
+        <h1 class="text-center">New Campground</h1>
+        <div class="col-md-6 offset-md-3">
+            <!-- this offset is another way of making it center -->
+            <form action="/campgrounds" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <!-- multipart/form-data allows pictures to be uploaded here -->
+                <!-- the submit will go to /campgrounds -->
+                <!-- this is bootstrap form validation - class="validated-form" -->
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="campground[location]" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group ">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.0" aria-label="Price"
+                            aria-describedby="price-label" name="campground[price]" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="location" name="campground[description]"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Upload Image(s)</label>
+                        <input class="form-control" type="file" id="formFileMultiple" name="image" multiple>
+                        <!-- multiple allows us to upload more than 1 file -->
+                    </div>
+                </div>
+                <div class="mb-3"> <button class="btn btn-success">Add Campground</button></div>
+            </form>
+            <a href="/campgrounds">All Campgrounds</a>
+        </div>
+    </div>
+    </div>
