@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-// https://boiling-springs-39129.herokuapp.com/
+// https://arcane-everglades-09117.herokuapp.com/ 
 
 // rc39jA6LS2N3vy9j
 // npm init-y
@@ -216,8 +216,9 @@ app.use((err, req, res, next) => {
     // this .render('error') is from our error.ejs under views, and we are giving it access to use err
 })
 
-app.listen(3000, () => {
-    console.log('Serving on port 3000');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`);
 })
 // starting server up nodemon app.js
 
