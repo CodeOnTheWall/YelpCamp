@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
+// add and commit any changes to code and git push heroku master
 // https://arcane-everglades-09117.herokuapp.com/ 
 
 // rc39jA6LS2N3vy9j
